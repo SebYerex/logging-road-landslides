@@ -126,7 +126,7 @@ SINMAP_FS <- function(
   # calculate factor of safety
   FS <- (cohesion_star + cos_slope * (1 - wetness * (density_w / bulk_density)) * tan_fa) / sin_slope
   
-  ## clip values to 0 = unconditionally unstable, and 10 = unconditionally stable
+  
   if (clamp_FS) {
     FS <- terra::clamp(FS, lower = 0, upper = 5)
   }
@@ -150,7 +150,7 @@ SINMAP_FS <- function(
 # ===============================
 # Optimized Green-Ampt Solver
 # ===============================
-# Optimized Green-Ampt Solver using a pre-allocated Rainfall Template
+# Optimized Green-Ampt Solver
 compute_transient_wetness <- function(K_sat, psi, d_theta, rain_intensity, duration, soil_depth, F_template) {
   F_final <- F_template 
   ponding_possible <- rain_intensity > K_sat
@@ -168,7 +168,7 @@ compute_transient_wetness <- function(K_sat, psi, d_theta, rain_intensity, durat
       F_iter <- mask(F_guess, is_ponded, maskvalues = FALSE)
       target_Kt <- K_sat * duration
       
-      for(k in 1:3) {  # Reduced from 5 to 3 
+      for(k in 1:3) {  
         log_term <- log(1 + F_iter / SM)
         f_val <- F_iter - (SM * log_term) - target_Kt
         f_prime <- F_iter / (SM + F_iter)
@@ -200,7 +200,7 @@ landslide_probability <- function(
   old_opt <- terraOptions(datatype = "FLT4S")
   on.exit(terraOptions(datatype = old_opt$datatype)) # Revert when done
   
-  # --- Suggestion 3: Pre-clamp scalars once ---
+  
   rain_intensity <- max(as.numeric(rain_intensity[1]), 0)
   duration <- max(as.numeric(duration[1]), 0)
   R_steady <- max(as.numeric(R_steady[1]), 0)
@@ -225,12 +225,11 @@ landslide_probability <- function(
   F_total_template <- (slope * 0) + (rain_intensity * duration)
   inv_n_bins <- 1 / n_bins
   
-  # --- FIXED LHS SETUP (Prevents NA/NaN Error) ---
+  # --- LHS SETUP ---
   lhs_matrix <- matrix(NA, nrow = n_bins, ncol = length(perturb_var))
   colnames(lhs_matrix) <- perturb_var
   for (j in seq_along(perturb_var)) {
-    # seq_len is safer than 1:n_bins
-    # Parentheses ensure the subtraction happens AFTER the sequence is made
+
     p_values <- (seq_len(n_bins) - 0.5) / n_bins 
     lhs_matrix[, j] <- qnorm(p_values, mean = 0, sd = perturb_settings[[perturb_var[j]]]$sd)
   }
@@ -238,7 +237,7 @@ landslide_probability <- function(
   prob_landslide <- rast(slope)
   values(prob_landslide) <- 0
   
-  # Suggestion 4: Toggle progress bar
+  
   if (progress) {
     pb <- txtProgressBar(min = 0, max = n_bins, style = 3)
   }
@@ -261,7 +260,7 @@ landslide_probability <- function(
     m1 <- compute_wetness(params$R_steady, current_trans, sca, sin_slope)
     d_theta_dynamic <- clamp(porosity_base * (1 - m1), lower = 1e-4)
     
-    # Updated transient wetness with Suggestion 1 and 2
+    # Updated transient wetness
     m2 <- compute_transient_wetness(params$ksat, psi, d_theta_dynamic, 
                                     rain_intensity, duration, params$soil_depth, 
                                     F_total_template)
@@ -269,7 +268,7 @@ landslide_probability <- function(
     wetness_total <- clamp(m1 + m2, lower = 0, upper = 1.0)
     
     # Calculate saturated density using porosity and density of water (1000 kg/m3)
-    # porosity_base is already 1 - (bulk_density / 2650) in your code
+    # porosity_base is already 1 - (bulk_density / 2650) 
     rho_sat <- params$bulk_density + (porosity_base * density_w)
     dynamic_bulk_density <- (wetness_total * rho_sat) + ((1 - wetness_total) * params$bulk_density)
     
@@ -289,7 +288,7 @@ landslide_probability <- function(
     if (progress) setTxtProgressBar(pb, i)
     
     # Force memory release at the end of each bin
-    rm(params, m1, m2, fs, wetness_total) # Explicitly remove large objects
+    rm(params, m1, m2, fs, wetness_total) 
     gc()
     
     # terra::tmpFiles(remove = TRUE)
