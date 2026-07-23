@@ -1,5 +1,5 @@
 # --------------------------------------------------------------------
-# terra-based approximation of REGOLITH's gauss_approx smoothing
+# terra-based approximation of REGOLITH's gauss_approx smoothing, based on: https://doi.org/10.5066/P9U2RDWJ
 
 library(terra)
 
