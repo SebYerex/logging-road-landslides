@@ -1,6 +1,6 @@
 ## SURFACE DETRENDING TRANSLATED TO PYTHON ##
 ## translated for MATLAB script: https://github.com/HydrogeomorphologyTools/DTM-Inpainting-surface-roughness-restitution/tree/master
-## which applies methods used in:  https://doi-org.ezproxy.library.uvic.ca/10.1002/esp.4739
+## which applies methods used in:  https://doi.org/10.1002/esp.4739
 
 ############################
 ### INSTALL DEPENDANCIES ###
