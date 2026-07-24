@@ -1,45 +1,43 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
+
 
 # logging-road-landslides
 
-# (Landslide Probability Package Name) Model User Guide
+# User Guide
 
 ### Table of Contents
 
-[1. Initial Set Up](#1-initial-set-up) - [1.1 Required
-Packages](#11-required-packages) - [1.2 Other Required Scripts to Run
-the Package](#12-other-required-scripts-to-run-the-package) - [1.3 Set
-File Paths](#13-set-file-paths)
+## Table of Contents
 
-[2. Initial Variable Computation](#2-initial-variable-computation) -
-[2.1 Slope Calculation](#21-slope-calculation) - [2.2 Well
-Data](#22-well-data) - [2.3 Road Filling](#23-road-filling) - [2.4 Soil
-Depth](#24-soil-depth) - [2.5 Extract Soil
-Properties](#25-extract-soil-properties) - [2.6 Calculate Shear
-Strength](#26-calculate-shear-strength) - [2.6.1 Calculating Sand
-Subfractions](#261-calculating-sand-subfractions) - [2.6.2 Calculating
-Shear Strength Parameters](#262-calculating-shear-strength-parameters) -
-[2.7 Hydrology](#27-hydrology) - [2.7.1 Calculating
-K<sub>sat</sub>](#271-calculating-ksat) - [2.7.2 Calibrating
-K<sub>sat</sub>](#272-calibrating-ksat) - [2.8 Calculating Normal
-Recharge with PCIC
-Data](#28-calculating-normal-recharge-with-pcic-data) - [2.9 Soil
-Density](#29-soil-density) - [2.10 Root Cohesion](#210-root-cohesion) -
-[2.11 Wildfire Effects](#211-wildfire-effects) - [2.11.1 Modifier
-Layers](#2111-modifier-layers) - [2.11.2 Uncertainty](#2112-uncertainty)
-
-[3. Landslide Probability](#3-landslide-probability) - [3.1
-Inputs](#31-inputs) - [3.2 Factor of Safety](#32-factor-of-safety) -
-[3.3 Computing Probability](#33-computing-probability) - [3.3.1
-Hydrological Variables](#331-hydrological-variables) - [3.3.2 Latin
-Hypercube Sampling Method](#332-latin-hypercube-sampling-method) - [3.4
-Expected Outputs](#34-expected-outputs)
-
-[4. References](#4-references)
+- [1. Initial Set Up](#1-initial-set-up)
+  - [1.1 Required Packages](#11-required-packages)
+  - [1.2 Other Required Scripts to Run the Package](#12-other-required-scripts-to-run-the-package)
+  - [1.3 Set File Paths](#13-set-file-paths)
+- [2. Initial Variable Computation](#2-initial-variable-computation)
+  - [2.1 Slope Calculation](#21-slope-calculation)
+  - [2.2 Well Data](#22-well-data)
+  - [2.3 Road Filling](#23-road-filling)
+  - [2.4 Soil Depth](#24-soil-depth)
+  - [2.5 Extract Soil Properties](#25-extract-soil-properties)
+  - [2.6 Calculate Shear Strength](#26-calculate-shear-strength)
+    - [2.6.1 Calculating Sand Subfractions](#261-calculating-sand-subfractions)
+    - [2.6.2 Calculating Shear Strength Parameters](#262-calculating-shear-strength-parameters)
+  - [2.7 Hydrology](#27-hydrology)
+    - [2.7.1 Calculating K<sub>sat</sub>](#271-calculating-ksat)
+    - [2.7.2 Calibrating K<sub>sat</sub>](#272-calibrating-ksat)
+  - [2.8 Calculating Normal Recharge with PCIC Data](#28-calculating-normal-recharge-with-pcic-data)
+  - [2.9 Soil Density](#29-soil-density)
+  - [2.10 Root Cohesion](#210-root-cohesion)
+  - [2.11 Wildfire Effects](#211-wildfire-effects)
+    - [2.11.1 Modifier Layers](#2111-modifier-layers)
+    - [2.11.2 Uncertainty](#2112-uncertainty)
+- [3. Landslide Probability](#3-landslide-probability)
+  - [3.1 Inputs](#31-inputs)
+  - [3.2 Factor of Safety](#32-factor-of-safety)
+  - [3.3 Computing Probability](#33-computing-probability)
+    - [3.3.1 Hydrological Variables](#331-hydrological-variables)
+    - [3.3.2 Latin Hypercube Sampling Method](#332-latin-hypercube-sampling-method)
+  - [3.4 Expected Outputs](#34-expected-outputs)
+- [4. References](#4-references)
 
 ## 1. Initial Set Up
 
